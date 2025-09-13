@@ -10,15 +10,7 @@ import { useRouter } from "next/navigation";
 import { useToast } from "@/hooks/use-toast";
 import { generateAssessmentQuestions, GenerateAssessmentQuestionsOutput } from "@/ai/flows/generate-assessment-questions";
 import { Skeleton } from "@/components/ui/skeleton";
-
-// Sample document about the French Revolution
-const documentContent = `The French Revolution was a period of far-reaching social and political upheaval in France and its colonies beginning in 1789. The Revolution overthrew the monarchy, established a republic, catalyzed violent periods of political turmoil, and finally culminated in a dictatorship under Napoleon who brought many of its principles to areas he conquered in Western Europe and beyond. Inspired by liberal and radical ideas, the Revolution profoundly altered the course of modern history, triggering the global decline of absolute monarchies while replacing them with republics and liberal democracies.
-
-Key events included the Storming of the Bastille on July 14, 1789, which is still celebrated in France as a national holiday. The Declaration of the Rights of Man and of the Citizen, adopted in August 1789, was a fundamental document of the Revolution, inspired by Enlightenment philosophy. It proclaimed that all men are born and remain free and equal in rights.
-
-The Reign of Terror, from 1793 to 1794, was a dark chapter. The Committee of Public Safety, led by Maximilien Robespierre, executed thousands for 'crimes against the revolution.' The period ended with Robespierre's own execution.
-
-The Directory, an executive committee of five, governed France from 1795 to 1799. It was a time of financial crisis and political instability, which paved the way for Napoleon Bonaparte's rise to power.`;
+import { getDocumentById } from "../../documents/page";
 
 
 type Question = GenerateAssessmentQuestionsOutput['questions'][0];
@@ -31,11 +23,15 @@ export default function AssessmentPage({ params }: { params: { id: string } }) {
   const router = useRouter();
   const { toast } = useToast();
 
+  const document = getDocumentById(params.id);
+
   useEffect(() => {
+    if (!document) return;
+
     const fetchQuestions = async () => {
       try {
         setLoading(true);
-        const result = await generateAssessmentQuestions({ documentContent });
+        const result = await generateAssessmentQuestions({ documentContent: document.content });
         setQuestions(result.questions);
       } catch (error) {
         console.error("Failed to generate questions:", error);
@@ -49,8 +45,19 @@ export default function AssessmentPage({ params }: { params: { id: string } }) {
       }
     };
     fetchQuestions();
-  }, [toast]);
+  }, [document, toast]);
 
+  if (!document) {
+      return (
+          <div className="max-w-4xl mx-auto text-center">
+              <h1 className="text-3xl font-bold font-headline">Document not found</h1>
+              <p className="text-muted-foreground mt-4">
+                  We couldn&apos;t find the document you were looking for.
+              </p>
+              <Button onClick={() => router.push('/dashboard/documents')} className="mt-6">Back to Documents</Button>
+          </div>
+      )
+  }
 
   const handleNext = () => {
     if (currentQuestionIndex < questions.length - 1) {
@@ -77,17 +84,17 @@ export default function AssessmentPage({ params }: { params: { id: string } }) {
 
     const uploadedDocuments = [{
         documentId: params.id,
-        title: "The French Revolution",
-        content: documentContent,
-        topic: "History",
+        title: document.title,
+        content: document.content,
+        topic: document.topic,
     }];
 
     // In a real app, you'd fetch this from a database or API
     const sharedDocuments = [{
         documentId: 'doc-shared-1',
-        title: 'Causes of the French Revolution (Shared)',
-        content: 'Further analysis on the economic and philosophical roots of the revolution.',
-        topic: 'History',
+        title: 'Advanced Topics in ' + document.topic,
+        content: 'Further analysis on advanced topics related to ' + document.title,
+        topic: document.topic,
         difficulty: 'Intermediate'
     }];
     
@@ -109,7 +116,7 @@ export default function AssessmentPage({ params }: { params: { id: string } }) {
     return (
       <div className="max-w-4xl mx-auto space-y-8">
         <div>
-          <h1 className="text-3xl font-bold font-headline">Assessment: The French Revolution</h1>
+          <h1 className="text-3xl font-bold font-headline">Assessment: {document.title}</h1>
           <p className="text-muted-foreground">
             Generating questions based on the document you uploaded...
           </p>
@@ -151,7 +158,7 @@ export default function AssessmentPage({ params }: { params: { id: string } }) {
   return (
     <div className="max-w-4xl mx-auto space-y-8">
       <div>
-        <h1 className="text-3xl font-bold font-headline">Assessment: The French Revolution</h1>
+        <h1 className="text-3xl font-bold font-headline">Assessment: {document.title}</h1>
         <p className="text-muted-foreground">
           Test your knowledge based on the document you uploaded.
         </p>

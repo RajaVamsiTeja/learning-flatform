@@ -32,6 +32,7 @@ const documents = [
     topic: "Physics",
     uploadedAt: "2023-10-01",
     wordCount: 10234,
+    content: "Quantum physics is the study of matter and energy at the most fundamental level. It aims to uncover the properties and behaviors of the very building blocks of nature. While many quantum experiments examine very small objects, such as electrons and photons, quantum phenomena are all around us, acting on every scale."
   },
   {
     id: "doc-2",
@@ -39,6 +40,7 @@ const documents = [
     topic: "History",
     uploadedAt: "2023-10-05",
     wordCount: 8765,
+    content: "The French Revolution was a period of far-reaching social and political upheaval in France and its colonies beginning in 1789. The Revolution overthrew the monarchy, established a republic, catalyzed violent periods of political turmoil, and finally culminated in a dictatorship under Napoleon who brought many of its principles to areas he conquered in Western Europe and beyond."
   },
   {
     id: "doc-3",
@@ -46,6 +48,7 @@ const documents = [
     topic: "Mathematics",
     uploadedAt: "2023-10-12",
     wordCount: 15432,
+    content: "The derivative of a function of a real variable measures the sensitivity to change of the function value (output value) with respect to a change in its argument (input value). Derivatives are a fundamental tool of calculus. For example, the derivative of the position of a moving object with respect to time is the object's velocity: this measures how quickly the position of the object changes when time is advanced."
   },
   {
     id: "doc-4",
@@ -53,8 +56,13 @@ const documents = [
     topic: "Literature",
     uploadedAt: "2023-10-18",
     wordCount: 6543,
+    content: "The Tragedy of Hamlet, Prince of Denmark, often shortened to Hamlet, is a tragedy written by William Shakespeare sometime between 1599 and 1601. It is Shakespeare's longest play, with 29,551 words. Set in Denmark, the play depicts Prince Hamlet and his revenge against his uncle, Claudius, who has murdered Hamlet's father in order to seize his throne and marry Hamlet's mother."
   },
 ];
+
+export function getDocumentById(id: string) {
+    return documents.find(doc => doc.id === id);
+}
 
 export default function DocumentsPage() {
   return (
