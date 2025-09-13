@@ -1,8 +1,9 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import { Bar, BarChart, ResponsiveContainer, XAxis, YAxis, Tooltip, CartesianGrid } from "recharts";
 
-const data = [
+const generateChartData = () => [
   { name: "Jan", score: Math.floor(Math.random() * 50) + 50 },
   { name: "Feb", score: Math.floor(Math.random() * 50) + 50 },
   { name: "Mar", score: Math.floor(Math.random() * 50) + 50 },
@@ -17,7 +18,15 @@ const data = [
   { name: "Dec", score: Math.floor(Math.random() * 50) + 50 },
 ];
 
+
 export function Overview() {
+  const [data, setData] = useState<any[]>([]);
+
+  useEffect(() => {
+    setData(generateChartData());
+  }, []);
+
+
   return (
     <ResponsiveContainer width="100%" height={350}>
       <BarChart data={data}>
@@ -40,7 +49,9 @@ export function Overview() {
             contentStyle={{
                 backgroundColor: 'hsl(var(--background))',
                 borderColor: 'hsl(var(--border))',
+                borderRadius: 'var(--radius)',
             }}
+             cursor={{ fill: 'hsl(var(--accent))', radius: 'var(--radius)' }}
         />
         <Bar dataKey="score" fill="hsl(var(--primary))" radius={[4, 4, 0, 0]} />
       </BarChart>

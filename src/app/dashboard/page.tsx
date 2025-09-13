@@ -8,14 +8,14 @@ import {
 } from "@/components/ui/card";
 import { Overview } from "@/components/overview";
 import { Button } from "@/components/ui/button";
-import { FileText, ClipboardCheck, Percent, ArrowRight } from "lucide-react";
+import { FileText, ClipboardCheck, Percent, ArrowRight, BookOpen } from "lucide-react";
 
 export default function DashboardPage() {
   return (
     <div className="space-y-8">
       <div>
-        <h1 className="text-3xl font-bold font-headline">Welcome back, Shadcn!</h1>
-        <p className="text-muted-foreground">
+        <h1 className="text-3xl md:text-4xl font-bold font-headline">Welcome back, Shadcn!</h1>
+        <p className="text-muted-foreground mt-2">
           Here&apos;s a quick overview of your progress. Keep up the great work!
         </p>
       </div>
@@ -61,39 +61,39 @@ export default function DashboardPage() {
           </CardContent>
         </Card>
       </div>
-      <div className="grid gap-4 lg:grid-cols-2">
-        <Card className="flex flex-col">
+      <div className="grid gap-8 lg:grid-cols-5">
+        <Card className="lg:col-span-2 flex flex-col">
           <CardHeader>
-            <CardTitle className="font-headline">What&apos;s Next?</CardTitle>
+            <CardTitle className="font-headline text-2xl">What&apos;s Next?</CardTitle>
             <CardDescription>
               Your next step to learning mastery.
             </CardDescription>
           </CardHeader>
-          <CardContent className="flex-grow">
-            <div className="bg-muted/50 p-6 rounded-lg text-center flex flex-col items-center justify-center h-full">
-              <div className="mb-4">
-                <FileText className="h-12 w-12 text-muted-foreground" />
+          <CardContent className="flex-grow flex">
+            <div className="bg-primary/10 p-6 rounded-lg flex flex-col items-center justify-center h-full w-full text-center">
+              <div className="mb-4 bg-primary/20 text-primary p-3 rounded-full">
+                <BookOpen className="h-8 w-8" />
               </div>
-              <h3 className="text-lg font-semibold mb-2">Take a new assessment</h3>
+              <h3 className="text-lg font-semibold mb-2">Review Study Plan</h3>
               <p className="text-sm text-muted-foreground mb-4">
-                You've uploaded "The French Revolution". Test your knowledge now!
+                You just finished an assessment on "The French Revolution". Check out your personalized study plan!
               </p>
               <Button asChild>
-                <Link href="/dashboard/documents">
-                  Go to Documents <ArrowRight className="ml-2 h-4 w-4" />
+                <Link href="/dashboard/study-plan">
+                  View My Plan <ArrowRight className="ml-2 h-4 w-4" />
                 </Link>
               </Button>
             </div>
           </CardContent>
         </Card>
-        <Card>
+        <Card className="lg:col-span-3">
           <CardHeader>
-            <CardTitle className="font-headline">Recent Assessment Scores</CardTitle>
+            <CardTitle className="font-headline text-2xl">Recent Assessment Scores</CardTitle>
             <CardDescription>
               Your performance over the last 12 months.
             </CardDescription>
           </CardHeader>
-          <CardContent>
+          <CardContent className="pl-2">
             <Overview />
           </CardContent>
         </Card>
