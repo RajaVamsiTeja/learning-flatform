@@ -16,7 +16,7 @@ export default function DashboardLayout({
         <SidebarHeader>
           <Link href="/dashboard" className="flex items-center gap-2 font-bold text-xl text-primary-foreground">
             <Logo className="h-8 w-8" />
-            <span className="font-headline">StudyFlowAI</span>
+            <span className="font-headline text-sidebar-foreground">StudyFlowAI</span>
           </Link>
         </SidebarHeader>
         <SidebarContent>
