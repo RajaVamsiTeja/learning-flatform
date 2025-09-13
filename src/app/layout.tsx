@@ -1,11 +1,11 @@
 import type {Metadata} from 'next';
 import './globals.css';
 import { Toaster } from "@/components/ui/toaster"
-import { Inter, Playfair_Display } from 'next/font/google'
+import { Manrope, Playfair_Display } from 'next/font/google'
 
-const inter = Inter({
+const manrope = Manrope({
   subsets: ['latin'],
-  variable: '--font-inter',
+  variable: '--font-manrope',
 })
 
 const playfairDisplay = Playfair_Display({
@@ -26,7 +26,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${inter.variable} ${playfairDisplay.variable} font-body antialiased`}>
+      <body className={`${manrope.variable} ${playfairDisplay.variable} font-body antialiased`}>
         {children}
         <Toaster />
       </body>
