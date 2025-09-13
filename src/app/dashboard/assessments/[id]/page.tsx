@@ -69,10 +69,39 @@ export default function AssessmentPage({ params }: { params: { id: string } }) {
   };
 
   const handleSubmit = () => {
+    const results = questions.map(q => ({
+        questionId: q.id,
+        isCorrect: answers[q.id] === q.answer,
+        topic: q.topic,
+    }));
+
+    const uploadedDocuments = [{
+        documentId: params.id,
+        title: "The French Revolution",
+        content: documentContent,
+        topic: "History",
+    }];
+
+    // In a real app, you'd fetch this from a database or API
+    const sharedDocuments = [{
+        documentId: 'doc-shared-1',
+        title: 'Causes of the French Revolution (Shared)',
+        content: 'Further analysis on the economic and philosophical roots of the revolution.',
+        topic: 'History',
+        difficulty: 'Intermediate'
+    }];
+    
+    localStorage.setItem('latestAssessmentResults', JSON.stringify({
+        assessmentResults: results,
+        uploadedDocuments,
+        sharedDocuments,
+    }));
+
     toast({
         title: "Assessment Submitted!",
         description: "Generating your personalized study plan...",
     });
+
     router.push("/dashboard/study-plan");
   };
 
@@ -153,9 +182,9 @@ export default function AssessmentPage({ params }: { params: { id: string } }) {
           Previous
         </Button>
         {currentQuestionIndex < questions.length - 1 ? (
-          <Button onClick={handleNext}>Next</Button>
+          <Button onClick={handleNext} disabled={!answers[currentQuestion.id]}>Next</Button>
         ) : (
-          <Button onClick={handleSubmit}>Submit Assessment</Button>
+          <Button onClick={handleSubmit} disabled={Object.keys(answers).length !== questions.length}>Submit Assessment</Button>
         )}
       </div>
     </div>

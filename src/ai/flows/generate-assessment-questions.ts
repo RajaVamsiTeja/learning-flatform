@@ -26,7 +26,9 @@ const GenerateAssessmentQuestionsOutputSchema = z.object({
       z.object({
         id: z.string().describe('A unique identifier for the question.'),
         question: z.string().describe('The question text.'),
+        topic: z.string().describe('The specific topic this question relates to from the document.'),
         options: z.array(z.string()).describe('A list of possible answers for multiple-choice questions.'),
+        answer: z.string().describe('The correct answer to the question.'),
       })
     )
     .describe('The generated assessment questions.'),
@@ -50,7 +52,7 @@ const prompt = ai.definePrompt({
   Given the following document content, generate a variety of multiple choice questions to assess understanding of the material.
   Include at least 5 questions.
   Make the questions and answers based on the context of the document.
-  Ensure each question has a unique ID, the question text, and a list of options.
+  For each question, provide a unique ID, the question text, a list of options, the correct answer, and the specific topic it covers from the document.
 
   Document Content: {{{documentContent}}}`,
 });
