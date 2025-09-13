@@ -1,16 +1,17 @@
 import type {Metadata} from 'next';
 import './globals.css';
 import { Toaster } from "@/components/ui/toaster"
-import { Inter, Lexend } from 'next/font/google'
+import { Montserrat, Poppins } from 'next/font/google'
 
-const inter = Inter({
+const poppins = Poppins({
   subsets: ['latin'],
-  variable: '--font-inter',
+  variable: '--font-poppins',
+  weight: ['400', '500', '600', '700']
 })
 
-const lexend = Lexend({
+const montserrat = Montserrat({
   subsets: ['latin'],
-  variable: '--font-lexend',
+  variable: '--font-montserrat',
 })
 
 
@@ -26,7 +27,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${inter.variable} ${lexend.variable} font-body antialiased`}>
+      <body className={`${poppins.variable} ${montserrat.variable} font-body antialiased`}>
         {children}
         <Toaster />
       </body>
