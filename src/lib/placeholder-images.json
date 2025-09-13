@@ -1,3 +1,10 @@
 {
-  "placeholderImages": []
+  "placeholderImages": [
+    {
+      "id": "hero-study",
+      "description": "A person studying at a desk with a laptop and books, with a soft, focused light.",
+      "imageUrl": "https://picsum.photos/seed/100/1200/800",
+      "imageHint": "study desk"
+    }
+  ]
 }
