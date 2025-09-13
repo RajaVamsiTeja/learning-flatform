@@ -22,9 +22,14 @@ export type GenerateAssessmentQuestionsInput = z.infer<
 
 const GenerateAssessmentQuestionsOutputSchema = z.object({
   questions: z
-    .array(z.string())
+    .array(
+      z.object({
+        id: z.string().describe('A unique identifier for the question.'),
+        question: z.string().describe('The question text.'),
+        options: z.array(z.string()).describe('A list of possible answers for multiple-choice questions.'),
+      })
+    )
     .describe('The generated assessment questions.'),
-  progress: z.string().describe('Progress summary of assessment question generation.'),
 });
 
 export type GenerateAssessmentQuestionsOutput = z.infer<
@@ -42,9 +47,11 @@ const prompt = ai.definePrompt({
   input: {schema: GenerateAssessmentQuestionsInputSchema},
   output: {schema: GenerateAssessmentQuestionsOutputSchema},
   prompt: `You are an expert in generating assessment questions from documents.
-  Given the following document content, generate a variety of question types (multiple choice, fill-in-the-blank) to assess understanding of the material.
+  Given the following document content, generate a variety of multiple choice questions to assess understanding of the material.
   Include at least 5 questions.
   Make the questions and answers based on the context of the document.
+  Ensure each question has a unique ID, the question text, and a list of options.
+
   Document Content: {{{documentContent}}}`,
 });
 
@@ -56,8 +63,6 @@ const generateAssessmentQuestionsFlow = ai.defineFlow(
   },
   async input => {
     const {output} = await prompt(input);
-    // add a one-sentence summary of the progress
-    output!.progress = 'Generated assessment questions from the uploaded document.';
     return output!;
   }
 );
