@@ -34,10 +34,10 @@ export function DashboardNav() {
         <SidebarMenuItem key={link.href}>
           <Link href={link.href} legacyBehavior passHref>
             <SidebarMenuButton
-              isActive={pathname === link.href}
+              isActive={pathname.startsWith(link.href) && (link.href.length > 10 ? true : pathname === link.href)}
               className={cn(
                 "w-full justify-start",
-                pathname === link.href && "font-bold"
+                 (pathname.startsWith(link.href) && (link.href.length > 10 ? true : pathname === link.href)) && "font-bold"
               )}
             >
               <link.icon className="mr-2 h-5 w-5" />
