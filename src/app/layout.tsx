@@ -1,16 +1,16 @@
 import type {Metadata} from 'next';
 import './globals.css';
 import { Toaster } from "@/components/ui/toaster"
-import { Manrope, Playfair_Display } from 'next/font/google'
+import { Inter, Lexend } from 'next/font/google'
 
-const manrope = Manrope({
+const inter = Inter({
   subsets: ['latin'],
-  variable: '--font-manrope',
+  variable: '--font-inter',
 })
 
-const playfairDisplay = Playfair_Display({
+const lexend = Lexend({
   subsets: ['latin'],
-  variable: '--font-playfair-display',
+  variable: '--font-lexend',
 })
 
 
@@ -26,7 +26,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${manrope.variable} ${playfairDisplay.variable} font-body antialiased`}>
+      <body className={`${inter.variable} ${lexend.variable} font-body antialiased`}>
         {children}
         <Toaster />
       </body>
